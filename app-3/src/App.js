@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+// import SearchBar from './Components/SearchBar'
+
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state= {
+        snacks: ['Cupcakes','iceCream','cookies','nunu'],
+        filterstring: "",
+    }
+  }
+ 
+  handleChange(val){
+    this.setState({filterstring: val})
+  }
   render() {
+    let snacksToShow = this.state.snacks.filter((val,index)=>{
+      return val.includes(this.state.filterstring)
+    }).map((val,index)=> {
+      return <h2 key = {index}>{val}</h2>
+    })
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className = "App">
+        <input onChange = {(event) => this.handleChange(event.target.value) }></input>
+        {snacksToShow}
       </div>
     );
   }
